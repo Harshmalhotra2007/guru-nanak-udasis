@@ -828,7 +828,7 @@ function setDroneVariant(variant) {
         setTimeout(() => startDrone(), 100);
     }
     const select = document.getElementById('droneVariantSelect');
-    select?.value = variant;
+    if (select) select.value = variant;
 }
 
 /* ==========================================
@@ -915,7 +915,8 @@ function setLanguage(lang) {
         const key = el.dataset.i18n;
         if (t[key]) el.textContent = t[key];
     });
-    document.getElementById('searchInput')?.placeholder = t.searchPlaceholder;
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.placeholder = t.searchPlaceholder;
 }
 
 /* ==========================================
