@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Environment and sensitive data
+.env
+.env.local
+.env.*.local
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local backups and temporary scratch files
+_backup_snapshot/
+timeline-*.html
+
+# Local assistant and tool configs
+.claude/
+.agents/
+.kombai/

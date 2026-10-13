@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Udasis of Guru Nanak - Interactive Travel Map</title>
+    <meta name="description" content="An interactive website exploring the four missionary journeys (Udasis) of Guru Nanak Dev Ji (1469–1539), blending historical research and spiritual teachings with map visualizations and audio.">
+    
+    <!-- Google Fonts with optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Preload critical fonts -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700&display=swap">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- SEO & Sharing Meta Tags -->
+    <meta name="description" content="Explore the interactive map of Guru Nanak Dev Ji's five Udasis (journeys) across South Asia, Himalayas, and Middle East. Discover historical locations, spiritual teachings, and the geographical reach of his epic travels.">
+    <meta name="keywords" content="Guru Nanak, Udasis, Sikhism, historical map, spiritual journey, India, Himalayas, Middle East">
+    <meta name="author" content="Baba Nanak Interactive Cartography Project">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://babananak.example.com/">
+    <meta property="og:title" content="The Udasis of Guru Nanak - Interactive Map">
+    <meta property="og:description" content="Explore the interactive map of Guru Nanak Dev Ji's five Udasis (journeys) across South Asia, Himalayas, and Middle East. Discover historical locations, spiritual teachings, and the geographical reach of his epic travels.">
+    <meta property="og:image" content="https://babananak.example.com/og-image.jpg">
+    <meta property="og:image:alt" content="Map showing Guru Nanak's five journeys across Asia">
+    <meta property="og:site_name" content="Baba Nanak Interactive Cartography">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://babananak.example.com/">
+    <meta name="twitter:title" content="The Udasis of Guru Nanak - Interactive Map">
+    <meta name="twitter:description" content="Explore the interactive map of Guru Nanak Dev Ji's five Udasis (journeys) across South Asia, Himalayas, and Middle East.">
+    <meta name="twitter:image" content="https://babananak.example.com/twitter-image.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://babananak.example.com/">
+    
+    <!-- Preconnect for faster CDN loading -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <!-- Esri World Imagery (primary satellite basemap) -->
+    <link rel="dns-prefetch" href="https://server.arcgisonline.com" />
+    <link rel="preconnect" href="https://server.arcgisonline.com" crossorigin />
+    <!-- OSM Labels overlay (free, no API key) -->
+    <link rel="dns-prefetch" href="https://maps.wikimedia.org" />
+    <link rel="preconnect" href="https://maps.wikimedia.org" crossorigin />
+
+    <!-- Leaflet Map CSS with multiple fallbacks -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" media="print" onload="this.media='all'" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.min.css?v=1.4">
+</head>
+<body>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "The Udasis of Guru Nanak - Interactive Map",
+      "description": "Explore the interactive map of Guru Nanak Dev Ji's five Udasis (journeys) across South Asia, Himalayas, and Middle East. Discover historical locations, spiritual teachings, and the geographical reach of his epic travels.",
+      "url": "https://babananak.example.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://babananak.example.com/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- Splash Screen: Archival Cartography Aesthetic -->
+    <div id="splash-screen" class="splash-container">
+        <div class="archival-folio-grid">
+            
+            <!-- Left Column: Dark Umber Sidebar -->
+            <aside class="archival-sidebar">
+                <div class="sidebar-top">
+                    <div class="sidebar-brand">
+                        <svg class="khanda-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="14" fill="none" stroke="#C1791F" stroke-width="4.5"/>
+                            <path d="M50,15 L53,30 L52,70 L50,73 L48,70 L47,30 Z" fill="#C1791F"/>
+                            <path d="M41,52 C32,56 28,68 33,77 C35,81 40,84 41,84 C42,84 39,81 37,76 C32,68 36,58 43,54 Z" fill="#C1791F"/>
+                            <path d="M59,52 C68,56 72,68 67,77 C65,81 60,84 59,84 C58,84 61,81 63,76 C68,68 64,58 57,54 Z" fill="#C1791F"/>
+                            <rect x="44" y="73" width="12" height="4" rx="2" fill="#C1791F"/>
+                        </svg>
+                    </div>
+                    <span class="folio-tag">FOLIO 01</span>
+                </div>
+
+                <div class="sidebar-nav-section">
+                    <h3 class="sidebar-nav-title">ROUTE INDEX</h3>
+                    <p class="sidebar-nav-subtitle">I–IV / EAST · SOUTH · NORTH · WEST</p>
+                    
+                    <ul class="route-index-list">
+                        <li class="route-item" data-udasi="1">
+                            <span class="roman">I</span>
+                            <span class="pip pip-east"></span>
+                            <span class="label">EAST</span>
+                        </li>
+                        <li class="route-item" data-udasi="2">
+                            <span class="roman">II</span>
+                            <span class="pip pip-south"></span>
+                            <span class="label">SOUTH</span>
+                        </li>
+                        <li class="route-item" data-udasi="3">
+                            <span class="roman">III</span>
+                            <span class="pip pip-north"></span>
+                            <span class="label">NORTH</span>
+                        </li>
+                        <li class="route-item" data-udasi="4">
+                            <span class="roman">IV</span>
+                            <span class="pip pip-west"></span>
+                            <span class="label">WEST</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-note-section">
+                    <h4 class="note-title">A NOTE ON THE MAP</h4>
+                    <p class="note-text">
+                        Route lines are approximate scholarly reconstructions from the Janam Sakhis — exact paths remain debated.
+                    </p>
+                    <div class="note-footer">GURU NANAK DEV JI · 1469–1539</div>
+                </div>
+            </aside>
+
+            <!-- Center Column: Main Hero Canvas -->
+            <main class="archival-hero">
+                <header class="hero-header-bar">
+                    <div class="header-left">
+                        <span class="header-pip"></span>
+                        <span>THE UDASIS · INTERACTIVE CARTOGRAPHY</span>
+                    </div>
+                    <div class="header-right">
+                        <span>1500–1524 CE</span>
+                        <span class="sep">|</span>
+                        <span>SOUTH ASIA · HIMALAYAS · MIDDLE EAST</span>
+                    </div>
+                </header>
+
+                <div class="hero-body">
+                    <p class="hero-kicker">A CURATED RECONSTRUCTION OF A SPIRITUAL GEOGRAPHY</p>
+                    <h1 class="hero-headline">The Udasis<br>of Guru Nanak</h1>
+
+                    <div class="hero-lead-group">
+                        <span class="hero-lead-bar"></span>
+                        <p class="hero-lead-text">
+                            Retrace the steps of Guru Nanak Dev Ji across South Asia, the Himalayas, and the Middle East. Explore historical accounts, spiritual hymns, and the geographical reach of his four epic Udasis.
+                        </p>
+                    </div>
+
+                    <div class="hero-cta-group">
+                        <button id="enter-btn" class="cta-enter-btn">
+                            <span>ENTER THE JOURNEY</span>
+                            <span class="arrow">&rarr;</span>
+                        </button>
+                    </div>
+                </div>
+
+                <footer class="hero-footer-bar">
+                    <div class="footer-archive-note">
+                        <strong>ARCHIVE NOTE</strong>
+                        <p>Traditional route reconstruction from the Janam Sakhis. Exact paths remain debated among scholars.</p>
+                    </div>
+                    <div class="footer-audio-note">
+                        <div class="audio-note-icon">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                        </div>
+                        <div class="audio-note-text">
+                            <strong>AMBIENT DRONE</strong>
+                            <p>Optional - can be muted anytime</p>
+                        </div>
+                    </div>
+                </footer>
+            </main>
+
+            <!-- Right Column: The Four Journeys Index -->
+            <aside class="archival-index">
+                <div class="index-header">
+                    <h2>THE FOUR JOURNEYS</h2>
+                    <span class="index-count">01–04</span>
+                </div>
+
+                <div class="index-hairline"></div>
+
+                <div class="index-list">
+                    <div class="index-item" data-udasi="1">
+                        <div class="item-number">01</div>
+                        <div class="item-content">
+                            <div class="item-title">
+                                <span class="pip pip-east"></span>
+                                <h3>First Udasi</h3>
+                            </div>
+                            <div class="item-meta">EAST · 1500–1506</div>
+                        </div>
+                    </div>
+
+                    <div class="index-hairline"></div>
+
+                    <div class="index-item" data-udasi="2">
+                        <div class="item-number">02</div>
+                        <div class="item-content">
+                            <div class="item-title">
+                                <span class="pip pip-south"></span>
+                                <h3>Second Udasi</h3>
+                            </div>
+                            <div class="item-meta">SOUTH · 1506–1513</div>
+                        </div>
+                    </div>
+
+                    <div class="index-hairline"></div>
+
+                    <div class="index-item" data-udasi="3">
+                        <div class="item-number">03</div>
+                        <div class="item-content">
+                            <div class="item-title">
+                                <span class="pip pip-north"></span>
+                                <h3>Third Udasi</h3>
+                            </div>
+                            <div class="item-meta">NORTH · 1514–1518</div>
+                        </div>
+                    </div>
+
+                    <div class="index-hairline"></div>
+
+                    <div class="index-item" data-udasi="4">
+                        <div class="item-number">04</div>
+                        <div class="item-content">
+                            <div class="item-title">
+                                <span class="pip pip-west"></span>
+                                <h3>Fourth Udasi</h3>
+                            </div>
+                            <div class="item-meta">WEST · 1519–1521</div>
+                        </div>
+                    </div>
+
+                    <div class="index-hairline"></div>
+
+                    <div class="index-item index-item-culmination" data-udasi="5">
+                        <div class="item-title">
+                            <span class="pip pip-punjab"></span>
+                            <h3>V · PUNJAB / KARTARPUR</h3>
+                        </div>
+                        <p class="culmination-desc">The settled culmination of the travelling years.</p>
+                    </div>
+                </div>
+
+                <footer class="index-footer">
+                    <span class="project-tag">BABA NANAK INTERACTIVE CARTOGRAPHY PROJECT</span>
+                    <span class="footer-links">OPEN THE ARCHIVE · FOLLOW THE ROUTE · READ THE SOURCES</span>
+                </footer>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Application Dashboard Layout (Manuscript Parchment Theme) -->
+    <div id="app-container" id="main-content" class="hidden">
+        <!-- Manuscript Parchment Header -->
+        <header class="app-header">
+            <div class="header-title-group">
+                <h1>ਉਦਾਸੀਆਂ · The Udasis</h1>
+                <span class="header-subtitle">the journeys of Guru Nanak Dev Ji, 1500–1524 CE</span>
+            </div>
+            
+            <div class="header-controls-group">
+                <!-- Ambient Audio Control Pill -->
+                <div class="header-audio-pill">
+                    <button id="ambient-toggle" class="audio-btn pause" title="Toggle Meditative Ambient Sound" aria-pressed="false" aria-label="Toggle ambient meditative Tanpura drone">
+                        <span class="audio-icon-play">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                        <span class="audio-icon-pause hidden">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        </span>
+                    </button>
+                    <span class="audio-title">Ambient Drone</span>
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.3" class="vol-range" aria-label="Volume Control">
+                </div>
+                
+                <div class="header-meta-text">
+                    Traditional route reconstruction from the Janam Sakhis · ~28,000 km on foot with Bhai Mardana · exact paths remain debated among scholars
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <div id="main">
+            <!-- Left Sidebar Controls -->
+            <aside id="sidebar" aria-label="Journeys Sidebar">
+                <h2>Select a journey</h2>
+                <button id="showAllBtn">Show all five journeys</button>
+                <div id="udasiButtons"></div>
+                
+                <h2 style="margin-top:20px;">Stops</h2>
+                <input type="search" id="searchInput" placeholder="Search places..." aria-label="Search places" class="search-input">
+                <div id="placeList" aria-live="polite" aria-atomic="true"></div>
+
+                <h2 style="margin-top:20px;">Tools</h2>
+                <button id="compareBtn" class="control-btn">Compare</button>
+                <button id="measureBtn" class="control-btn">Measure</button>
+                <button id="clearMeasureBtn" class="control-btn" style="display:none;">Clear</button>
+                <div id="measurementResult" class="measurement-result" aria-live="polite"></div>
+                <button id="timelineBtn" class="control-btn">Timeline</button>
+                <button id="exportBtn" class="control-btn">Export</button>
+
+                <h2 style="margin-top:20px;">Language</h2>
+                <select id="langSelect" class="lang-select">
+                    <option value="en">English</option>
+                    <option value="pa">ਪੰਜਾਬੀ</option>
+                </select>
+
+                <h2 style="margin-top:20px;">Audio</h2>
+                <select id="droneVariantSelect" class="lang-select">
+                    <option value="traditional">Traditional</option>
+                    <option value="meditative">Meditative</option>
+                    <option value="ambient">Ambient</option>
+                </select>
+            </div>
+
+            <h2 style="margin-top:20px;">Resources</h2>
+            <button id="resourcesBtn" class="control-btn">Resources</button>
+            <div id="resourcesContent" class="resources-content" style="display:none;">
+                <h3>Primary Sources & References</h3>
+                <ul>
+                    <li><strong>Primary Sources:</strong>
+                        <ul>
+                            <li>Guru Granth Sahib - The sacred scripture of Sikhism</li>
+                            <li>Janamsakhi Traditions - Biography literature of Guru Nanak</li>
+                            <li>Bhai Gurdas's Vars (Var 1) - Early 17th century accounts</li>
+                        </ul>
+                    </li>
+                    <li><strong>Academic References:</strong>
+                        <ul>
+                            <li>McLeod, W.H. - "Guru Nanak" (Encyclopaedia Britannica)</li>
+                            <li>Mann, G.S. - "Guru Nanak's Life and Legacy: An Appraisal"</li>
+                            <li>Singh, F. & Singh, K. - "Atlas: Travels of Guru Nanak"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Multimedia Resources:</strong>
+                        <ul>
+                            <li>Audio recordings of Guru Nanak's shabads (hymns)</li>
+                            <li>Documentary films on Sikh history</li>
+                            <li>Virtual tours of historical Gurdwaras</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Glossary of Terms</h3>
+                <dl>
+                    <dt>Udasi</dt>
+                    <dd>A journey or pilgrimage, specifically referring to the five major journeys of Guru Nanak Dev Ji.</dd>
+
+                    <dt>Janamsakhi</dt>
+                    <dd>Biographical literature detailing the life of Guru Nanak Dev Ji.</dd>
+
+                    <dt>Shabad</dt>
+                    <dd>A hymn or sacred poem from the Guru Granth Sahib.</dd>
+
+                    <dt>Gurdwara</dt>
+                    <dd>A Sikh place of worship and community center.</dd>
+
+                    <dt>Langar</dt>
+                    <dd>The free community kitchen served at Gurdwaras, open to all visitors regardless of background.</dd>
+
+                    <dt>Sat Sang</dt>
+                    <dd>True congregation or holy company, referring to spiritual fellowship.</dd>
+                </dl>
+
+                <h3>Teaching Resources</h3>
+                <p>Discussion questions and activities for educators:</p>
+                <ul>
+                    <li><strong>Discussion Questions:</strong>
+                        <ul>
+                            <li>How did Guru Nanak's travels challenge religious orthodoxy of his time?</li>
+                            <li>What role did the concept of "Langar" play in promoting social equality?</li>
+                            <li>How do the Udasis reflect the geographical and cultural diversity of the Indian subcontinent?</li>
+                        </ul>
+                    </li>
+                    <li><strong>Activities:</strong>
+                        <ul>
+                            <li>Map tracing exercise: Have students trace one of Guru Nanak's journeys on a blank map.</li>
+                            <li>Role-play activity: Students can role-play conversations between Guru Nanak and religious leaders he encountered.</li>
+                            <li>Comparative analysis: Compare Guru Nanak's teachings with other contemporary religious leaders.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Contribute Knowledge</h3>
+                <p>Have additional historical context or corrections? Share them here (moderated):</p>
+                <form id="contributionForm">
+                    <div>
+                        <label for="contributionTopic">Topic/Location:</label>
+                        <input type="text" id="contributionTopic" placeholder="e.g., Visit to Mecca, Discussion at Gorakhmata" required>
+                    </div>
+                    <div>
+                        <label for="contributionType">Type:</label>
+                        <select id="contributionType" required>
+                            <option value="correction">Correction</option>
+                            <li>Additional Context</option>
+                            <option value="reference">Reference Suggestion</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="contributionDetails">Details:</label>
+                        <textarea id="contributionDetails" rows="4" placeholder="Please provide details about your contribution..." required></textarea>
+                    </div>
+                    <div>
+                        <label for="contributionSource">Source/Reference (optional):</label>
+                        <input type="text" id="contributionSource" placeholder="Book title, website, archive reference, etc.">
+                    </div>
+                    <button type="submit" class="control-btn">Submit Contribution</button>
+                </form>
+                <div id="contributionStatus" style="margin-top:10px; min-height:20px;"></div>
+            </div>
+        </aside>
+
+            <!-- Map Viewport -->
+            <div id="mapWrap">
+                <div id="map" aria-label="Interactive Map of Guru Nanak's Journeys"></div>
+            </div>
+        </div>
+
+        <!-- Manuscript Footer -->
+        <footer class="app-footer">
+            Route lines are approximate scholarly reconstructions from the Janam Sakhis — exact paths remain debated.
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        if (typeof L === 'undefined') {
+            console.warn("jsDelivr CDN failed to load Leaflet JS, attempting Cloudflare CDN fallback.");
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"><\/script>');
+        }
+    </script>
+    
+    <!-- Custom Application JS -->
+    <script src="app.min.js?v=1.1"></script>
+
+    <!-- Timeline Bar (Feature 6) -->
+    <div id="timelineBar" role="region" aria-label="Historical Timeline"></div>
+
+        <!-- Service Worker for Offline Caching -->
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/service-worker.js')
+                        .then(registration => {
+                            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                        })
+                        .catch(err => {
+                            console.log('ServiceWorker registration failed: ', err);
+                        });
+                });
+            }
+        </script>
+
+</body>
+</html>
+        
+                            <div class="card-footer">
+                                <span class="source">Source: Guru Granth Sahib (Page 663) <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-divider">
+                    <span class="circle-khanda">⚜</span>
+                </div>
+
+                <!-- Southward Udasi Section -->
+                <div class="udasi-group" data-group="2">
+                    <div class="group-header color-2-bg">
+                        <span class="group-number">Udasi II</span>
+                        <h2>South India & Sri Lanka (1506 – 1513)</h2>
+                        <p class="group-summary">A long voyage through southern kingdoms and across the sea to Sri Lanka (Ceylon/Singladip), engaging with temple cultures and Dravidian spiritual schools.</p>
+                    </div>
+
+                    <div class="timeline-nodes">
+                        <!-- Kanchipuram -->
+                        <div class="timeline-card" data-loc="kanchipuram" id="node-kanchipuram">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Kanchipuram & Srirangam</h3>
+                            <p class="meta">Tamil Nadu, India | Southern Temple Centers</p>
+                            <p class="desc">
+                                Traveled south through the Deccan plateau. Visited the historic Shiva and Vishnu temple centers of Kanchipuram and Srirangam. Discussed theological concepts of idol worship, divine immanence, and devotion (Bhakti) with local Vaishnava and Shaiva priests.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Fauja Singh, Atlas: Travels <a href="#citation-3" class="citation-link">[3]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Nagapattinam & Rameshwaram -->
+                        <div class="timeline-card" data-loc="rameshwaram" id="node-rameshwaram">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Rameshwaram & Setubandha</h3>
+                            <p class="meta">Tamil Nadu, India | Southern Coast</p>
+                            <p class="desc">
+                                Reached the southern tip of India. Before embarking on a ship across the Palk Strait to Ceylon, he visited Rameshwaram, a holy site linked to the Ramayana. Spoke about the non-dualistic nature of God, who transcends physical temple boundaries.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Puratan Janamsakhi <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Sri Lanka -->
+                        <div class="timeline-card" data-loc="srilanka" id="node-srilanka">
+                            <span class="badge badge-confidence-disputed" title="Debated by modern historians">Disputed</span>
+                            <h3>Sri Lanka (Singladip)</h3>
+                            <p class="meta">Sri Lanka | Kingdom of Shivnabh</p>
+                            <p class="desc">
+                                Crossed the sea to Ceylon, traditionally called Singladip in Sikh texts. He was received by King Shivnabh. The king, seeking proof of spiritual authority, tested the Guru. Moved by Nanak's spiritual wisdom and simple presence, he and his court became followers, establishing a localized congregation (Dharamsala).
+                            </p>
+                            <blockquote class="quote">
+                                "The mind is the king; the mind is the priest; the mind is the path of salvation."
+                                <cite>— Guru Nanak (Maru Solahe)</cite>
+                            </blockquote>
+                            <div class="card-footer">
+                                <span class="source">Source: Puratan Janamsakhi, Gurinder Singh Mann <a href="#citation-2" class="citation-link">[2]</a> <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Ujjain -->
+                        <div class="timeline-card" data-loc="ujjain" id="node-ujjain">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Ujjain</h3>
+                            <p class="meta">Madhya Pradesh, India | Central Return Route</p>
+                            <p class="desc">
+                                On the return journey northward, he visited Ujjain along the Shipra River. Visited the Bharthari Caves and debated with Nath Yogis. He argued that yoga is not about physical breath controls or yogic postures, but inner alignment with truth and compassionate action.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Atlas: Travels of Guru Nanak <a href="#citation-3" class="citation-link">[3]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Somnath -->
+                        <div class="timeline-card" data-loc="somnath" id="node-somnath">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Somnath & Gujarat</h3>
+                            <p class="meta">Gujarat, India | Western Coast</p>
+                            <p class="desc">
+                                Visited the famous Somnath temple. Addressed the priests on the futility of guarding external stone idols while failing to defend the inner temple of the human heart from anger, lust, and greed.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Janamsakhi traditions <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-divider">
+                    <span class="circle-khanda">⚜</span>
+                </div>
+
+                <!-- Third Udasi Section -->
+                <div class="udasi-group" data-group="3">
+                    <div class="group-header color-3-bg">
+                        <span class="group-number">Udasi III</span>
+                        <h2>Himalayas & the North (1514 – 1518)</h2>
+                        <p class="group-summary">An arduous ascent into the Himalayan peaks, Kashmir, Ladakh, and trans-Himalayan Tibet to challenge extreme asceticism and preach active social responsibility.</p>
+                    </div>
+
+                    <div class="timeline-nodes">
+                        <!-- Kangra & Mandi -->
+                        <div class="timeline-card" data-loc="kangra" id="node-kangra">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Kangra, Mandi & Kullu</h3>
+                            <p class="meta">Himachal Pradesh, India | Himalayan Foothills</p>
+                            <p class="desc">
+                                Traveled through the steep valleys of Himachal. Visited ancient temple sites like Jawalaji (glowing volcanic fire temple) and Baijnath. Met local rulers and ascetics, highlighting that escaping to isolated mountains does not solve spiritual ignorance.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Atlas: Travels of Guru Nanak <a href="#citation-3" class="citation-link">[3]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Srinagar -->
+                        <div class="timeline-card" data-loc="srinagar" id="node-srinagar">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Srinagar</h3>
+                            <p class="meta">Kashmir, India | Valley of Scholars</p>
+                            <p class="desc">
+                                In Kashmir, he met the renowned Kashmiri Pandit Brahm Das, who arrived carrying loads of Sanskrit scriptures to display his intellectual superiority. Guru Nanak pointed out that reading books without internalizing love and humility is mere pride. Brahm Das renounced his pride and became a disciple.
+                            </p>
+                            <blockquote class="quote">
+                                "One may read thousands of books, one may read cartloads of books... but only one word matters: the word of Divine Love."
+                                <cite>— Guru Nanak (Asa di Var)</cite>
+                            </blockquote>
+                            <div class="card-footer">
+                                <span class="source">Source: Puratan Janamsakhi <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Ladakh -->
+                        <div class="timeline-card" data-loc="ladakh" id="node-ladakh">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Ladakh</h3>
+                            <p class="meta">Jammu & Kashmir, India | Trans-Himalayan Region</p>
+                            <p class="desc">
+                                Traveled to high altitudes, meeting Tibetan Buddhist monks (Lamas). Local folklore remembers him as *Nanak Lama* or *Rinpoche Nanak*. A famous site, Gurdwara Pathar Sahib, commemorates an encounter where a local tyrant tried to crush the Guru with a boulder, which miraculously turned to wax upon touching him.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Local Ladakhi folklore & traditions <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Sumer Parbat -->
+                        <div class="timeline-card" data-loc="sumer" id="node-sumer">
+                            <span class="badge badge-warning">Debated Location</span>
+                            <span class="badge badge-confidence-disputed" title="Debated by modern historians">Disputed</span>
+                            <h3>Sumer Parbat (Mount Kailash)</h3>
+                            <p class="meta">Tibet | Sacred Trans-Himalayan Peak</p>
+                            <p class="desc">
+                                Traditional accounts locate his dialogue with the Siddh Yogis (disciples of Gorakhnath) on "Sumer Parbat" (traditionally identified with Mt. Kailash/Manasarovar). The Yogis asked how the plains of Punjab were faring. Nanak replied that when the wise men flee to live in mountain caves, the common people are left in darkness. This dialogue is recorded in the Guru Granth Sahib as the *Siddh Gosht*.
+                            </p>
+                            <blockquote class="quote">
+                                "How can the world cross the ocean of existence? As a lotus floats untouched upon water, as a duck floats on a stream... so does one cross the world by keeping the mind anchored in the Shabad."
+                                <cite>— Guru Nanak (Siddh Gosht, Raag Ramkali)</cite>
+                            </blockquote>
+                            <div class="card-footer">
+                                <span class="source">Source: Siddh Gosht, Puratan Janamsakhi <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Achal Batala -->
+                        <div class="timeline-card" data-loc="batala" id="node-batala">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Achal Batala</h3>
+                            <p class="meta">Punjab, India | Return Route</p>
+                            <p class="desc">
+                                Upon returning to Punjab, he attended the Shivratri fair at Achal Batala. Had a famous discourse with Yogi Bhangar Nath, who accused the Guru of mixing household life with spiritual pursuits (like adding sour yeast to milk). Nanak replied that the Yogis themselves beg for food from the very householders they look down upon.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Bhai Gurdas (Var 1, Pauri 39-44) <a href="#citation-4" class="citation-link">[4]</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-divider">
+                    <span class="circle-khanda">⚜</span>
+                </div>
+
+                <!-- Fourth Udasi Section -->
+                <div class="udasi-group" data-group="4">
+                    <div class="group-header color-4-bg">
+                        <span class="group-number">Udasi IV</span>
+                        <h2>West Asia & Middle East (1519 – 1524)</h2>
+                        <p class="group-summary">His final and most international journey: dressing in pilgrim garb, crossing Sindh, and traveling to the Islamic holy cities of Mecca, Medina, and Baghdad.</p>
+                    </div>
+
+                    <div class="timeline-nodes">
+                        <!-- Lakhpat & Hinglaj -->
+                        <div class="timeline-card" data-loc="lakhpat" id="node-lakhpat">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Lakhpat & Hinglaj</h3>
+                            <p class="meta">Sindh & Balochistan, Pakistan | Gateway to Gulf</p>
+                            <p class="desc">
+                                Traveled southwest into Sindh. Visited Lakhpat (Kutch, Gujarat) and the sacred cave temple of Hinglaj Devi in Balochistan. Adopted a composite attire—wearing a blue robe resembling Sufi dervishes and carrying a staff, symbolizing a traveler seeking universal truth.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Fauja Singh, Atlas: Travels <a href="#citation-3" class="citation-link">[3]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Mecca -->
+                        <div class="timeline-card" data-loc="mecca" id="node-mecca">
+                            <span class="badge badge-holy">Sacred Center</span>
+                            <span class="badge badge-confidence-documented" title="Strong historical evidence">Documented</span>
+                            <h3>Mecca</h3>
+                            <p class="meta">Saudi Arabia | Holy City of Islam</p>
+                            <img data-src="images/mecca.jpg" class="lazy-card-image" alt="Mecca Desert Oasis" />
+                            <p class="desc">
+                                Traveled by ship to Jeddah and walked to Mecca. Tired from his journey, he fell asleep with his feet pointing toward the holy Kaaba. A religious official, Jiwan, kicked him in anger, demanding: <em>"How dare you point your feet toward the House of God?"</em> Nanak replied calmly: <em>"Brother, please turn my feet in the direction where God does not reside."</em> Jiwan turned his feet, only to realize the divine presence is everywhere.
+                            </p>
+                            <blockquote class="quote">
+                                "The Muslim says: 'He is in Mecca'; the Hindu says: 'He is in the East'. But Nanak says: He resides in every heart, in all directions."
+                                <cite>— Bhai Gurdas (Var 1, Pauri 32)</cite>
+                            </blockquote>
+                            <div class="card-footer">
+                                <span class="source">Source: Bhai Gurdas, Puratan Janamsakhi <a href="#citation-4" class="citation-link">[4]</a> <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Medina -->
+                        <div class="timeline-card" data-loc="medina" id="node-medina">
+                            <span class="badge badge-holy">Sacred Center</span>
+                            <span class="badge badge-confidence-disputed" title="Debated by modern historians">Disputed</span>
+                            <h3>Medina</h3>
+                            <p class="meta">Saudi Arabia | City of the Prophet</p>
+                            <p class="desc">
+                                Traditional narratives describe Nanak traveling to Medina, engaging in discussions with Islamic theologians on the spiritual essence of prayer, fasting, and submission to the Divine Will (Hukam).
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Puratan Janamsakhi, Encyclopaedia Britannica <a href="#citation-1" class="citation-link">[1]</a> <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Baghdad -->
+                        <div class="timeline-card" data-loc="baghdad" id="node-baghdad">
+                            <span class="badge badge-debate">Interfaith Dialogue</span>
+                            <span class="badge badge-confidence-documented" title="Strong historical evidence">Documented</span>
+                            <h3>Baghdad</h3>
+                            <p class="meta">Iraq | Center of Sufism</p>
+                            <p class="desc">
+                                Traveled north to Baghdad, a historic capital of Islamic learning. Sat outside the city and raised a loud call to prayer (*Azan*), but modified it to praise the infinite universes. Met with the local Sufi leader, Pir Bahlol. A stone inscription dating to 917 Hijri (1511-1521 CE) was discovered in Baghdad commemorating the visit of "Baba Nanak Fakir."
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Bhai Gurdas (Var 1), Archeological Stone Inscription <a href="#citation-4" class="citation-link">[4]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Kabul & Peshawar -->
+                        <div class="timeline-card" data-loc="kabul" id="node-kabul">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Kabul & Peshawar</h3>
+                            <p class="meta">Afghanistan & Khyber Pass | Return Route</p>
+                            <p class="desc">
+                                Returned via Kabul and Peshawar (Gorakhhatri temple). Engaged in dialogues with Sufi and yogic institutions in Peshawar. Taught local communities to earn an honest living (Kirat Karni) and share their earnings (Vand Chhakna).
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Gurinder Singh Mann <a href="#citation-2" class="citation-link">[2]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Hasan Abdal -->
+                        <div class="timeline-card" data-loc="hasanabdal" id="node-hasanabdal">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Hasan Abdal (Panja Sahib)</h3>
+                            <p class="meta">Punjab, Pakistan</p>
+                            <p class="desc">
+                                Settled near a hill where a Muslim dervish, Wali Qandhari, lived. Seeking water for his companion Mardana, the Guru asked Wali Qandhari, who refused out of pride. The Guru dug a stone at the base, and water bubbled up, while Wali Qandhari's spring dried up. Enraged, Wali Qandhari rolled a massive boulder down the hill. Guru Nanak stopped it with his open hand, leaving an imprint on the stone—now commemorated as Gurdwara Panja Sahib.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Janamsakhi traditions <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Kartarpur -->
+                        <div class="timeline-card" data-loc="kartarpur" id="node-kartarpur">
+                            <span class="badge badge-end">Culmination of Udasis</span>
+                            <span class="badge badge-confidence-documented" title="Strong historical evidence">Documented</span>
+                            <h3>Kartarpur</h3>
+                            <p class="meta">Punjab, Pakistan | The Sacred Commune</p>
+                            <img data-src="images/kartarpur.jpg" class="lazy-card-image" alt="Kartarpur Sacred Fields" />
+                            <p class="desc">
+                                After 24 years of travel, Guru Nanak settled on the banks of the Ravi River. He took off his traveler robes, put on the clothes of a farmer, and established a self-sustaining agricultural community. Here he instituted the practice of *Langar* (free communal kitchen, where king and commoner sat side-by-side to eat) and nominated his successor Bhai Lehna (Guru Angad Dev Ji), laying the institutional foundation for the Sikh faith.
+                            </p>
+                            <blockquote class="quote">
+                                "Truth is the highest virtue, but higher still is truthful living."
+                                <cite>— Guru Nanak (Raag Sri Rag)</cite>
+                            </blockquote>
+                            <div class="card-footer">
+                                <span class="source">Source: Puratan & Bala Janamsakhis, Gurinder Singh Mann <a href="#citation-2" class="citation-link">[2]</a> <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer & Detailed Bibliographical Section -->
+                <footer class="narrative-footer">
+                    <div class="divider">
+                        <span class="dot"></span>
+                        <span class="line"></span>
+                        <span class="dot"></span>
+                    </div>
+                    
+                    <h3>Academic Bibliography & Sources</h3>
+                    <p class="footer-note">
+                        This digital interactive mapping resource is built upon historical Sikh traditions and academic publications:
+                    </p>
+                    <ol class="sources-list">
+                        <li id="citation-1">
+                            <strong>Encyclopaedia Britannica:</strong> "Guru Nanak" (written by William Hewat McLeod). Summarizes the limits of Janamsakhi narratives as historical evidence, noting they contain hagiographical components written decades after the Guru's passing.
+                        </li>
+                        <li id="citation-2">
+                            <strong>Gurinder Singh Mann:</strong> <em>"Guru Nanak's Life and Legacy: An Appraisal"</em> (Journal of Punjab Studies, Vol. 17). Highlights the reconstruction of his life through the Puratan Janamsakhi framework and early Sikh manuscripts.
+                        </li>
+                        <li id="citation-3">
+                            <strong>Fauja Singh & Kirpal Singh:</strong> <em>"Atlas: Travels of Guru Nanak"</em> (Punjabi University Patiala, 1976). Provides geographic mapping by contrasting different traditional streams (Bala, Puratan, Meharban) and outlining the best historical inferences for routes.
+                        </li>
+                        <li id="citation-4">
+                            <strong>Bhai Gurdas's Vars (Var 1):</strong> The earliest written records (c. 1600) detailing the travels to Baghdad, Mecca, and dialogues with Siddhs.
+                        </li>
+                    
+                        <li id="citation-5">
+                            <strong>Janamsakhi Traditions:</strong> <em>Puratan & Bala Manuscripts</em>. Traditional narrative accounts of Guru Nanak's life, documenting oral histories and early communal memory.
+                        </li>
+                    </ol>
+                    
+                    <div class="info-alert sensitive">
+                        <strong>Cultural Sensitivity & Historical Debates:</strong> 
+                        Sikh tradition holds the journeys to be spiritually guided missionary work spanning the breadth of the known world. In academic circles, debates exist regarding the exact sequence, the historicity of specific distant locations (such as Turkey or parts of Sri Lanka), and the translation of place-names (e.g. identifying Sumer Parbat with Mount Kailash vs. sites in Himachal Pradesh). This website respects both the deep spiritual significance of these sites to millions of devotees and the rigorous standards of modern historical analysis.
+                    </div>
+                    
+                    <p class="copyright">&copy; 2026 Baba Nanak Interactive Cartography Project. Developed with respect for all faiths.</p>
+                </footer>
+            </div>
+        </aside></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-divider">
+                    <span class="circle-khanda">⚜</span>
+                </div>
+
+                <!-- Southward Udasi Section -->
+                <div class="udasi-group" data-group="2">
+                    <div class="group-header color-2-bg">
+                        <span class="group-number">Udasi II</span>
+                        <h2>South India & Sri Lanka (1506 – 1513)</h2>
+                        <p class="group-summary">A long voyage through southern kingdoms and across the sea to Sri Lanka (Ceylon/Singladip), engaging with temple cultures and Dravidian spiritual schools.</p>
+                    </div>
+
+                    <div class="timeline-nodes">
+                        <!-- Kanchipuram -->
+                        <div class="timeline-card" data-loc="kanchipuram" id="node-kanchipuram">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Kanchipuram & Srirangam</h3>
+                            <p class="meta">Tamil Nadu, India | Southern Temple Centers</p>
+                            <p class="desc">
+                                Traveled south through the Deccan plateau. Visited the historic Shiva and Vishnu temple centers of Kanchipuram and Srirangam. Discussed theological concepts of idol worship, divine immanence, and devotion (Bhakti) with local Vaishnava and Shaiva priests.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Fauja Singh, Atlas: Travels <a href="#citation-3" class="citation-link">[3]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Nagapattinam & Rameshwaram -->
+                        <div class="timeline-card" data-loc="rameshwaram" id="node-rameshwaram">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Rameshwaram & Setubandha</h3>
+                            <p class="meta">Tamil Nadu, India | Southern Coast</p>
+                            <p class="desc">
+                                Reached the southern tip of India. Before embarking on a ship across the Palk Strait to Ceylon, he visited Rameshwaram, a holy site linked to the Ramayana. Spoke about the non-dualistic nature of God, who transcends physical temple boundaries.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Puratan Janamsakhi <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Sri Lanka -->
+                        <div class="timeline-card" data-loc="srilanka" id="node-srilanka">
+                            <span class="badge badge-confidence-disputed" title="Debated by modern historians">Disputed</span>
+                            <h3>Sri Lanka (Singladip)</h3>
+                            <p class="meta">Sri Lanka | Kingdom of Shivnabh</p>
+                            <p class="desc">
+                                Crossed the sea to Ceylon, traditionally called Singladip in Sikh texts. He was received by King Shivnabh. The king, seeking proof of spiritual authority, tested the Guru. Moved by Nanak's spiritual wisdom and simple presence, he and his court became followers, establishing a localized congregation (Dharamsala).
+                            </p>
+                            <blockquote class="quote">
+                                "The mind is the king; the mind is the priest; the mind is the path of salvation."
+                                <cite>— Guru Nanak (Maru Solahe)</cite>
+                            </blockquote>
+                            <div class="card-footer">
+                                <span class="source">Source: Puratan Janamsakhi, Gurinder Singh Mann <a href="#citation-2" class="citation-link">[2]</a> <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Ujjain -->
+                        <div class="timeline-card" data-loc="ujjain" id="node-ujjain">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Ujjain</h3>
+                            <p class="meta">Madhya Pradesh, India | Central Return Route</p>
+                            <p class="desc">
+                                On the return journey northward, he visited Ujjain along the Shipra River. Visited the Bharthari Caves and debated with Nath Yogis. He argued that yoga is not about physical breath controls or yogic postures, but inner alignment with truth and compassionate action.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Atlas: Travels of Guru Nanak <a href="#citation-3" class="citation-link">[3]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Somnath -->
+                        <div class="timeline-card" data-loc="somnath" id="node-somnath">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Somnath & Gujarat</h3>
+                            <p class="meta">Gujarat, India | Western Coast</p>
+                            <p class="desc">
+                                Visited the famous Somnath temple. Addressed the priests on the futility of guarding external stone idols while failing to defend the inner temple of the human heart from anger, lust, and greed.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Janamsakhi traditions <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-divider">
+                    <span class="circle-khanda">⚜</span>
+                </div>
+
+                <!-- Third Udasi Section -->
+                <div class="udasi-group" data-group="3">
+                    <div class="group-header color-3-bg">
+                        <span class="group-number">Udasi III</span>
+                        <h2>Himalayas & the North (1514 – 1518)</h2>
+                        <p class="group-summary">An arduous ascent into the Himalayan peaks, Kashmir, Ladakh, and trans-Himalayan Tibet to challenge extreme asceticism and preach active social responsibility.</p>
+                    </div>
+
+                    <div class="timeline-nodes">
+                        <!-- Kangra & Mandi -->
+                        <div class="timeline-card" data-loc="kangra" id="node-kangra">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Kangra, Mandi & Kullu</h3>
+                            <p class="meta">Himachal Pradesh, India | Himalayan Foothills</p>
+                            <p class="desc">
+                                Traveled through the steep valleys of Himachal. Visited ancient temple sites like Jawalaji (glowing volcanic fire temple) and Baijnath. Met local rulers and ascetics, highlighting that escaping to isolated mountains does not solve spiritual ignorance.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Atlas: Travels of Guru Nanak <a href="#citation-3" class="citation-link">[3]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Srinagar -->
+                        <div class="timeline-card" data-loc="srinagar" id="node-srinagar">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Srinagar</h3>
+                            <p class="meta">Kashmir, India | Valley of Scholars</p>
+                            <p class="desc">
+                                In Kashmir, he met the renowned Kashmiri Pandit Brahm Das, who arrived carrying loads of Sanskrit scriptures to display his intellectual superiority. Guru Nanak pointed out that reading books without internalizing love and humility is mere pride. Brahm Das renounced his pride and became a disciple.
+                            </p>
+                            <blockquote class="quote">
+                                "One may read thousands of books, one may read cartloads of books... but only one word matters: the word of Divine Love."
+                                <cite>— Guru Nanak (Asa di Var)</cite>
+                            </blockquote>
+                            <div class="card-footer">
+                                <span class="source">Source: Puratan Janamsakhi <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Ladakh -->
+                        <div class="timeline-card" data-loc="ladakh" id="node-ladakh">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Ladakh</h3>
+                            <p class="meta">Jammu & Kashmir, India | Trans-Himalayan Region</p>
+                            <p class="desc">
+                                Traveled to high altitudes, meeting Tibetan Buddhist monks (Lamas). Local folklore remembers him as *Nanak Lama* or *Rinpoche Nanak*. A famous site, Gurdwara Pathar Sahib, commemorates an encounter where a local tyrant tried to crush the Guru with a boulder, which miraculously turned to wax upon touching him.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Local Ladakhi folklore & traditions <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Sumer Parbat -->
+                        <div class="timeline-card" data-loc="sumer" id="node-sumer">
+                            <span class="badge badge-warning">Debated Location</span>
+                            <span class="badge badge-confidence-disputed" title="Debated by modern historians">Disputed</span>
+                            <h3>Sumer Parbat (Mount Kailash)</h3>
+                            <p class="meta">Tibet | Sacred Trans-Himalayan Peak</p>
+                            <p class="desc">
+                                Traditional accounts locate his dialogue with the Siddh Yogis (disciples of Gorakhnath) on "Sumer Parbat" (traditionally identified with Mt. Kailash/Manasarovar). The Yogis asked how the plains of Punjab were faring. Nanak replied that when the wise men flee to live in mountain caves, the common people are left in darkness. This dialogue is recorded in the Guru Granth Sahib as the *Siddh Gosht*.
+                            </p>
+                            <blockquote class="quote">
+                                "How can the world cross the ocean of existence? As a lotus floats untouched upon water, as a duck floats on a stream... so does one cross the world by keeping the mind anchored in the Shabad."
+                                <cite>— Guru Nanak (Siddh Gosht, Raag Ramkali)</cite>
+                            </blockquote>
+                            <div class="card-footer">
+                                <span class="source">Source: Siddh Gosht, Puratan Janamsakhi <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Achal Batala -->
+                        <div class="timeline-card" data-loc="batala" id="node-batala">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Achal Batala</h3>
+                            <p class="meta">Punjab, India | Return Route</p>
+                            <p class="desc">
+                                Upon returning to Punjab, he attended the Shivratri fair at Achal Batala. Had a famous discourse with Yogi Bhangar Nath, who accused the Guru of mixing household life with spiritual pursuits (like adding sour yeast to milk). Nanak replied that the Yogis themselves beg for food from the very householders they look down upon.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Bhai Gurdas (Var 1, Pauri 39-44) <a href="#citation-4" class="citation-link">[4]</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-divider">
+                    <span class="circle-khanda">⚜</span>
+                </div>
+
+                <!-- Fourth Udasi Section -->
+                <div class="udasi-group" data-group="4">
+                    <div class="group-header color-4-bg">
+                        <span class="group-number">Udasi IV</span>
+                        <h2>West Asia & Middle East (1519 – 1524)</h2>
+                        <p class="group-summary">His final and most international journey: dressing in pilgrim garb, crossing Sindh, and traveling to the Islamic holy cities of Mecca, Medina, and Baghdad.</p>
+                    </div>
+
+                    <div class="timeline-nodes">
+                        <!-- Lakhpat & Hinglaj -->
+                        <div class="timeline-card" data-loc="lakhpat" id="node-lakhpat">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Lakhpat & Hinglaj</h3>
+                            <p class="meta">Sindh & Balochistan, Pakistan | Gateway to Gulf</p>
+                            <p class="desc">
+                                Traveled southwest into Sindh. Visited Lakhpat (Kutch, Gujarat) and the sacred cave temple of Hinglaj Devi in Balochistan. Adopted a composite attire—wearing a blue robe resembling Sufi dervishes and carrying a staff, symbolizing a traveler seeking universal truth.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Fauja Singh, Atlas: Travels <a href="#citation-3" class="citation-link">[3]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Mecca -->
+                        <div class="timeline-card" data-loc="mecca" id="node-mecca">
+                            <span class="badge badge-holy">Sacred Center</span>
+                            <span class="badge badge-confidence-documented" title="Strong historical evidence">Documented</span>
+                            <h3>Mecca</h3>
+                            <p class="meta">Saudi Arabia | Holy City of Islam</p>
+                            <img data-src="images/mecca.jpg" class="lazy-card-image" alt="Mecca Desert Oasis" />
+                            <p class="desc">
+                                Traveled by ship to Jeddah and walked to Mecca. Tired from his journey, he fell asleep with his feet pointing toward the holy Kaaba. A religious official, Jiwan, kicked him in anger, demanding: <em>"How dare you point your feet toward the House of God?"</em> Nanak replied calmly: <em>"Brother, please turn my feet in the direction where God does not reside."</em> Jiwan turned his feet, only to realize the divine presence is everywhere.
+                            </p>
+                            <blockquote class="quote">
+                                "The Muslim says: 'He is in Mecca'; the Hindu says: 'He is in the East'. But Nanak says: He resides in every heart, in all directions."
+                                <cite>— Bhai Gurdas (Var 1, Pauri 32)</cite>
+                            </blockquote>
+                            <div class="card-footer">
+                                <span class="source">Source: Bhai Gurdas, Puratan Janamsakhi <a href="#citation-4" class="citation-link">[4]</a> <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Medina -->
+                        <div class="timeline-card" data-loc="medina" id="node-medina">
+                            <span class="badge badge-holy">Sacred Center</span>
+                            <span class="badge badge-confidence-disputed" title="Debated by modern historians">Disputed</span>
+                            <h3>Medina</h3>
+                            <p class="meta">Saudi Arabia | City of the Prophet</p>
+                            <p class="desc">
+                                Traditional narratives describe Nanak traveling to Medina, engaging in discussions with Islamic theologians on the spiritual essence of prayer, fasting, and submission to the Divine Will (Hukam).
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Puratan Janamsakhi, Encyclopaedia Britannica <a href="#citation-1" class="citation-link">[1]</a> <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Baghdad -->
+                        <div class="timeline-card" data-loc="baghdad" id="node-baghdad">
+                            <span class="badge badge-debate">Interfaith Dialogue</span>
+                            <span class="badge badge-confidence-documented" title="Strong historical evidence">Documented</span>
+                            <h3>Baghdad</h3>
+                            <p class="meta">Iraq | Center of Sufism</p>
+                            <p class="desc">
+                                Traveled north to Baghdad, a historic capital of Islamic learning. Sat outside the city and raised a loud call to prayer (*Azan*), but modified it to praise the infinite universes. Met with the local Sufi leader, Pir Bahlol. A stone inscription dating to 917 Hijri (1511-1521 CE) was discovered in Baghdad commemorating the visit of "Baba Nanak Fakir."
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Bhai Gurdas (Var 1), Archeological Stone Inscription <a href="#citation-4" class="citation-link">[4]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Kabul & Peshawar -->
+                        <div class="timeline-card" data-loc="kabul" id="node-kabul">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Kabul & Peshawar</h3>
+                            <p class="meta">Afghanistan & Khyber Pass | Return Route</p>
+                            <p class="desc">
+                                Returned via Kabul and Peshawar (Gorakhhatri temple). Engaged in dialogues with Sufi and yogic institutions in Peshawar. Taught local communities to earn an honest living (Kirat Karni) and share their earnings (Vand Chhakna).
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Gurinder Singh Mann <a href="#citation-2" class="citation-link">[2]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Hasan Abdal -->
+                        <div class="timeline-card" data-loc="hasanabdal" id="node-hasanabdal">
+                            <span class="badge badge-confidence-traditional" title="Based on Janamsakhi tradition">Traditional</span>
+                            <h3>Hasan Abdal (Panja Sahib)</h3>
+                            <p class="meta">Punjab, Pakistan</p>
+                            <p class="desc">
+                                Settled near a hill where a Muslim dervish, Wali Qandhari, lived. Seeking water for his companion Mardana, the Guru asked Wali Qandhari, who refused out of pride. The Guru dug a stone at the base, and water bubbled up, while Wali Qandhari's spring dried up. Enraged, Wali Qandhari rolled a massive boulder down the hill. Guru Nanak stopped it with his open hand, leaving an imprint on the stone—now commemorated as Gurdwara Panja Sahib.
+                            </p>
+                            <div class="card-footer">
+                                <span class="source">Source: Janamsakhi traditions <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+
+                        <!-- Kartarpur -->
+                        <div class="timeline-card" data-loc="kartarpur" id="node-kartarpur">
+                            <span class="badge badge-end">Culmination of Udasis</span>
+                            <span class="badge badge-confidence-documented" title="Strong historical evidence">Documented</span>
+                            <h3>Kartarpur</h3>
+                            <p class="meta">Punjab, Pakistan | The Sacred Commune</p>
+                            <img data-src="images/kartarpur.jpg" class="lazy-card-image" alt="Kartarpur Sacred Fields" />
+                            <p class="desc">
+                                After 24 years of travel, Guru Nanak settled on the banks of the Ravi River. He took off his traveler robes, put on the clothes of a farmer, and established a self-sustaining agricultural community. Here he instituted the practice of *Langar* (free communal kitchen, where king and commoner sat side-by-side to eat) and nominated his successor Bhai Lehna (Guru Angad Dev Ji), laying the institutional foundation for the Sikh faith.
+                            </p>
+                            <blockquote class="quote">
+                                "Truth is the highest virtue, but higher still is truthful living."
+                                <cite>— Guru Nanak (Raag Sri Rag)</cite>
+                            </blockquote>
+                            <div class="card-footer">
+                                <span class="source">Source: Puratan & Bala Janamsakhis, Gurinder Singh Mann <a href="#citation-2" class="citation-link">[2]</a> <a href="#citation-5" class="citation-link">[5]</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer & Detailed Bibliographical Section -->
+                <footer class="narrative-footer">
+                    <div class="divider">
+                        <span class="dot"></span>
+                        <span class="line"></span>
+                        <span class="dot"></span>
+                    </div>
+                    
+                    <h3>Academic Bibliography & Sources</h3>
+                    <p class="footer-note">
+                        This digital interactive mapping resource is built upon historical Sikh traditions and academic publications:
+                    </p>
+                    <ol class="sources-list">
+                        <li id="citation-1">
+                            <strong>Encyclopaedia Britannica:</strong> "Guru Nanak" (written by William Hewat McLeod). Summarizes the limits of Janamsakhi narratives as historical evidence, noting they contain hagiographical components written decades after the Guru's passing.
+                        </li>
+                        <li id="citation-2">
+                            <strong>Gurinder Singh Mann:</strong> <em>"Guru Nanak's Life and Legacy: An Appraisal"</em> (Journal of Punjab Studies, Vol. 17). Highlights the reconstruction of his life through the Puratan Janamsakhi framework and early Sikh manuscripts.
+                        </li>
+                        <li id="citation-3">
+                            <strong>Fauja Singh & Kirpal Singh:</strong> <em>"Atlas: Travels of Guru Nanak"</em> (Punjabi University Patiala, 1976). Provides geographic mapping by contrasting different traditional streams (Bala, Puratan, Meharban) and outlining the best historical inferences for routes.
+                        </li>
+                        <li id="citation-4">
+                            <strong>Bhai Gurdas's Vars (Var 1):</strong> The earliest written records (c. 1600) detailing the travels to Baghdad, Mecca, and dialogues with Siddhs.
+                        </li>
+                    
+                        <li id="citation-5">
+                            <strong>Janamsakhi Traditions:</strong> <em>Puratan & Bala Manuscripts</em>. Traditional narrative accounts of Guru Nanak's life, documenting oral histories and early communal memory.
+                        </li>
+                    </ol>
+                    
+                    <div class="info-alert sensitive">
+                        <strong>Cultural Sensitivity & Historical Debates:</strong> 
+                        Sikh tradition holds the journeys to be spiritually guided missionary work spanning the breadth of the known world. In academic circles, debates exist regarding the exact sequence, the historicity of specific distant locations (such as Turkey or parts of Sri Lanka), and the translation of place-names (e.g. identifying Sumer Parbat with Mount Kailash vs. sites in Himachal Pradesh). This website respects both the deep spiritual significance of these sites to millions of devotees and the rigorous standards of modern historical analysis.
+                    </div>
+                    
+                    <p class="copyright">&copy; 2026 Baba Nanak Interactive Cartography Project. Developed with respect for all faiths.</p>
+                </footer>
+            </div>
+        
+</body>
+</html>
