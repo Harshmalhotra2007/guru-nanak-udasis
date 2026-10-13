@@ -165,34 +165,44 @@ a:hover {
 .splash-container .archival-hero {
     width: 100%;
     min-height: auto;
-    padding: 12px 40px 28px;
-    max-height: calc(100vh - 40px);
+    padding: 12px 40px 20px;
+    max-height: calc(100vh - 140px);
     overflow-y: auto;
+    font-size: 0.88em;
 }
 
 .splash-container .archival-hero h1 {
-    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
     line-height: 1.15;
 }
 
 .splash-container .archival-hero .subtitle {
-    font-size: clamp(0.85rem, 1.8vw, 1rem);
-    line-height: 1.4;
+    font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+    line-height: 1.35;
 }
 
 .splash-container .archival-hero .hero-desc {
-    font-size: clamp(0.9rem, 1.5vw, 1.05rem);
-    line-height: 1.45;
+    font-size: clamp(0.8rem, 1.3vw, 0.95rem);
+    line-height: 1.35;
+    margin-bottom: 4px;
+}
+
+.splash-container .note-text {
+    font-size: 0.65em;
+}
+
+.splash-container .note-footer {
+    font-size: 0.55em;
 }
 
 .splash-container .hero-cta-group {
-    margin-top: 20px;
-    padding-bottom: 20px;
+    margin-top: 8px;
+    padding-bottom: 16px;
 }
 
 .splash-container .cta-enter-btn {
-    padding: 12px 32px;
-    font-size: 0.95em;
+    padding: 10px 28px;
+    font-size: 0.9em;
 }
 
 .splash-container.fade-out {
