@@ -155,8 +155,44 @@ a:hover {
     z-index: 9999;
     overflow-y: auto;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     transition: opacity 0.8s ease-in-out, visibility 0.8s;
     padding: 0;
+}
+
+.splash-container .archival-hero {
+    width: 100%;
+    min-height: auto;
+    padding: 12px 40px 28px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+
+.splash-container .archival-hero h1 {
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    line-height: 1.15;
+}
+
+.splash-container .archival-hero .subtitle {
+    font-size: clamp(0.85rem, 1.8vw, 1rem);
+    line-height: 1.4;
+}
+
+.splash-container .archival-hero .hero-desc {
+    font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+    line-height: 1.45;
+}
+
+.splash-container .hero-cta-group {
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+.splash-container .cta-enter-btn {
+    padding: 12px 32px;
+    font-size: 0.95em;
 }
 
 .splash-container.fade-out {
@@ -586,6 +622,32 @@ a:hover {
     font-size: 0.62rem;
     letter-spacing: 1px;
     color: #695D4D;
+}
+
+/* DESKTOP SIDEBAR SCROLLING */
+@media (min-width: 1025px) {
+    .archival-sidebar {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+    }
+    .archival-sidebar .sidebar-inner {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 6px;
+    }
+    .archival-sidebar .sidebar-inner::-webkit-scrollbar {
+        width: 6px;
+    }
+    .archival-sidebar .sidebar-inner::-webkit-scrollbar-thumb {
+        background: rgba(212, 175, 55, 0.35);
+        border-radius: 3px;
+    }
+    .archival-sidebar .sidebar-inner::-webkit-scrollbar-track {
+        background: transparent;
+    }
 }
 
 /* RESPONSIVE LAYOUT FOR TABLET & MOBILE */

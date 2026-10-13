@@ -17,7 +17,6 @@
     <link rel="manifest" href="manifest.json">
 
     <!-- SEO & Sharing Meta Tags -->
-    <meta name="description" content="Explore the interactive map of Guru Nanak Dev Ji's five Udasis (journeys) across South Asia, Himalayas, and Middle East. Discover historical locations, spiritual teachings, and the geographical reach of his epic travels.">
     <meta name="keywords" content="Guru Nanak, Udasis, Sikhism, historical map, spiritual journey, India, Himalayas, Middle East">
     <meta name="author" content="Baba Nanak Interactive Cartography Project">
     <meta name="robots" content="index, follow">
@@ -264,7 +263,7 @@
     </div>
 
     <!-- Application Dashboard Layout (Manuscript Parchment Theme) -->
-    <div id="app-container" id="main-content" class="hidden">
+    <div id="app-container" class="hidden">
         <!-- Manuscript Parchment Header -->
         <header class="app-header">
             <div class="header-title-group">
@@ -297,6 +296,7 @@
         <div id="main">
             <!-- Left Sidebar Controls -->
             <aside id="sidebar" aria-label="Journeys Sidebar">
+                <div class="sidebar-inner">
                 <h2>Select a journey</h2>
                 <button id="showAllBtn">Show all five journeys</button>
                 <div id="udasiButtons"></div>
@@ -325,7 +325,6 @@
                     <option value="meditative">Meditative</option>
                     <option value="ambient">Ambient</option>
                 </select>
-            </div>
 
             <h2 style="margin-top:20px;">Resources</h2>
             <button id="resourcesBtn" class="control-btn">Resources</button>
@@ -422,6 +421,7 @@
                 </form>
                 <div id="contributionStatus" style="margin-top:10px; min-height:20px;"></div>
             </div>
+                </div>
         </aside>
 
             <!-- Map Viewport -->
