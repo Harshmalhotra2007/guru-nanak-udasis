@@ -134,6 +134,11 @@ let measureMode = 'distance'; // 'distance' or 'area'
 let measureLayer = null;
 let measurePoints = [];
 let isEntering = false;
+// Constants for magic numbers
+const MAP_FIT_PADDING = 0.2;
+const GROUP_FIT_PADDING = 0.3;
+const ROUTE_SHOW_DELAY = 700;
+const ENTER_BTN_DELAY = 600;
 let audioCtx = null;
 let masterGain = null;
 let dronePlaying = false;
@@ -266,13 +271,16 @@ function initMap() {
         zoomControl: false
     });
 
-    // Base layer: Esri World Physical
-    const physical = L.tileLayer.provider('Esri.WorldImagery', {
+    // Base layer: Esri World Imagery (satellite)
+    const physical = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
         opacity: 0.7
     }).addTo(map);
 
     // Labels layer: CARTO Positron labels only
-    const labels = L.tileLayer.provider('CartoDB.PositronOnlyLabels', {
+    const labels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
         opacity: 0.6
     }).addTo(map);
 
@@ -367,7 +375,7 @@ function showOne(id) {
         if (group.getLayers().length > 0) {
             const groupBounds = group.getBounds();
             if (groupBounds.isValid()) {
-                map.fitBounds(groupBounds.pad(0.2));
+                map.fitBounds(groupBounds.pad(MAP_FIT_PADDING));
             }
         }
     }
@@ -435,7 +443,7 @@ function updateMapLayers() {
                 if (markerLayers[id]) fg.addLayer(markerLayers[id]);
             });
             if (fg.getLayers().length > 0) {
-                map.fitBounds(fg.getBounds().pad(0.3));
+                map.fitBounds(fg.getBounds().pad(GROUP_FIT_PADDING));
             }
         } else {
             if (map) map.setView([26, 60], 3);
@@ -878,17 +886,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 const appContainer = document.getElementById("app-container");
                 if (appContainer) appContainer.classList.remove("hidden");
 
-                initMap();
+// Initialize core components with error handling
+                    try {
+                        initMap();
+                    } catch (e) {
+                        console.error('Map initialization failed:', e);
+                    }
 
-                const showAllBtn = document.getElementById("showAllBtn");
-                if (showAllBtn) {
-                    showAllBtn.onclick = showAll;
-                }
+                    const showAllBtn = document.getElementById('showAllBtn');
+                    if (showAllBtn) {
+                        showAllBtn.onclick = showAll;
+                    }
 
-                // Feature bindings
-                initSearch();
-                initMeasurement();
-                loadURLState();
+                    // Feature bindings with safety
+                    try { initSearch(); } catch (e) { console.error('Search init failed:', e); }
+                    try { initMeasurement(); } catch (e) { console.error('Measurement init failed:', e); }
+                    loadURLState();
+                    // Handle back/forward navigation
+                    window.addEventListener('popstate', loadURLState);
 
                 // Compare button
                 const compareBtn = document.getElementById('compareBtn');
@@ -900,8 +915,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 const measureBtn = document.getElementById('measureBtn');
                 if (measureBtn) {
                     measureBtn.addEventListener('click', () => {
-                        measureMode = measureMode === 'distance' ? 'area' : 'distance';
-                        clearMeasurement();
+                        try {
+                            measureMode = measureMode === 'distance' ? 'area' : 'distance';
+                            clearMeasurement();
+                        } catch (e) {
+                            console.error('Measure button handler failed:', e);
+                        }
                     });
                 }
 
@@ -960,17 +979,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Attach click listeners to route-items and index-items on the landing page
-    const routeItems = document.querySelectorAll(".route-item, .index-item");
+    const routeItems = document.querySelectorAll('.route-item, .index-item');
     routeItems.forEach(item => {
-        item.addEventListener("click", () => {
+        item.addEventListener('click', () => {
             const udasiId = item.dataset.udasi;
             if (enterBtn && !isEntering) {
                 enterBtn.click();
             }
             if (udasiId) {
-                setTimeout(() => {
-                    showOne(parseInt(udasiId));
-                }, 700);
+                // Ensure map is initialized before showing the journey
+                const attemptShow = () => {
+                    if (map) {
+                        showOne(parseInt(udasiId));
+                    } else {
+                        // Retry after a short delay
+                        setTimeout(attemptShow, 200);
+                    }
+                };
+                // Initial delay to give enterBtn's initMap a chance, then check
+                setTimeout(attemptShow, ROUTE_SHOW_DELAY);
             }
         });
     });
@@ -993,11 +1020,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Privacy-first analytics stub — no data leaves the client
     const analytics = {
         _events: [],
+        _maxEvents: 100,
         trackJourneyView(journeyId) {
             this._events.push({ type: 'journeyView', journeyId, t: Date.now() });
+            if (this._events.length > this._maxEvents) this._events.shift();
         },
         trackError(msg) {
             this._events.push({ type: 'error', msg, t: Date.now() });
+            if (this._events.length > this._maxEvents) this._events.shift();
         }
     };
 

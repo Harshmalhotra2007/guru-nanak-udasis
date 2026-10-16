@@ -239,6 +239,7 @@ a:hover {
 .khanda-icon {
     width: 32px;
     height: 32px;
+    object-fit: contain;
 }
 
 .folio-tag {
