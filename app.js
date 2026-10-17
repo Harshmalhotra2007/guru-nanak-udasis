@@ -147,6 +147,16 @@ let currentLang = 'en';
 let isAmbient = false;
 let timelineVisible = false;
 
+function escapeHTML(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
 /* ==========================================
    AUDIO ENGINE (Web Audio API Tanpura-style drone)
    ========================================== */
@@ -168,10 +178,13 @@ function startDrone() {
 
     // Create oscillators for tanpura-like drone (C-G harmony: Sa-Pa)
     const baseFreq = 65.41; // C2 (Sa)
-    const osc1 = audioCtx.createOscillator(); // Sa (drone)
-    const osc2 = audioCtx.createOscillator(); // Pa (fifth)
-    const osc3 = audioCtx.createOscillator(); // Higher Sa (octave)
-    const osc4 = audioCtx.createOscillator(); // Higher Pa (fifth of octave)
+    window.oscillators = [
+        audioCtx.createOscillator(), // Sa (drone)
+        audioCtx.createOscillator(), // Pa (fifth)
+        audioCtx.createOscillator(), // Higher Sa (octave)
+        audioCtx.createOscillator()  // Higher Pa (fifth of octave)
+    ];
+    const [osc1, osc2, osc3, osc4] = window.oscillators;
 
     // Set frequencies based on drone variant
     let freq1, freq2, freq3, freq4;
@@ -240,10 +253,16 @@ function startDrone() {
 function stopDrone() {
     if (!audioCtx || !dronePlaying) return;
 
-    // Stop all oscillators (simplified - in practice we'd need to track them)
-    // For now, we'll just disconnect and recreate on next start
+    if (window.oscillators) {
+        window.oscillators.forEach(osc => {
+            try {
+                osc.stop();
+                osc.disconnect();
+            } catch (e) {}
+        });
+        window.oscillators = null;
+    }
     dronePlaying = false;
-    // Note: Proper cleanup would require storing oscillator references
 }
 
 function setDroneVariant(variant) {
@@ -494,16 +513,16 @@ function renderPlaceList(udasiId) {
     }
 
     container.innerHTML = `
-        <h3>${title}</h3>
+        <h3>${escapeHTML(title)}</h3>
         ${places.map(p => `
-            <div class="place-card" data-udasi="${p.udasiId}" data-place="${p.oldName}">
+            <div class="place-card" data-udasi="${p.udasiId}" data-place="${escapeHTML(p.oldName)}">
                 <div class="place-icon" style="border-left-color: ${UDASIS.find(u => u.id === p.udasiId).hex};">
                     <span class="place-number">${p.udasiId}</span>
                 </div>
                 <div class="place-info">
-                    <div class="place-name">${p.newName}</div>
-                    <div class="place-old-name">${p.oldName}</div>
-                    <div class="place-desc">${p.desc}</div>
+                    <div class="place-name">${escapeHTML(p.newName)}</div>
+                    <div class="place-old-name">${escapeHTML(p.oldName)}</div>
+                    <div class="place-desc">${escapeHTML(p.desc)}</div>
                 </div>
             </div>
         `).join('')}
@@ -688,8 +707,8 @@ function initTimeline() {
             item.dataset.placeIndex = index;
             item.textContent = `${p.newName}`;
             item.addEventListener('click', () => {
-                const udasi = UDASIS.find(u => u.id === p.udasiId);
-                const place = udasi.places[p.placeIndex];
+                const udasi = UDASIS.find(ud => ud.id === u.id);
+                const place = udasi ? udasi.places[index] : null;
                 if (place && map) {
                     map.setView([place.lat, place.lng], 16);
                 }
@@ -766,14 +785,14 @@ function renderSearchResults(results) {
         ${results.length === 0 ?
             '<p>No places match your search. Try different keywords.</p>' :
             results.map(p => `
-                <div class="place-card" data-udasi="${p.udasiId}" data-place="${p.oldName}">
+                <div class="place-card" data-udasi="${p.udasiId}" data-place="${escapeHTML(p.oldName)}">
                     <div class="place-icon" style="border-left-color: ${UDASIS.find(u => u.id === p.udasiId).hex};">
                         <span class="place-number">${p.udasiId}</span>
                     </div>
                     <div class="place-info">
-                        <div class="place-name">${p.newName}</div>
-                        <div class="place-old-name">${p.oldName}</div>
-                        <div class="place-desc">${p.desc}</div>
+                        <div class="place-name">${escapeHTML(p.newName)}</div>
+                        <div class="place-old-name">${escapeHTML(p.oldName)}</div>
+                        <div class="place-desc">${escapeHTML(p.desc)}</div>
                     </div>
                 </div>
             `).join('')}
