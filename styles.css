@@ -160,14 +160,19 @@ a:hover {
     align-items: center;
     transition: opacity 0.8s ease-in-out, visibility 0.8s;
     padding: 0;
+    scrollbar-width: none;
+}
+
+.splash-container::-webkit-scrollbar {
+    display: none;
 }
 
 .splash-container .archival-hero {
     width: 100%;
     min-height: auto;
     padding: 12px 40px 20px;
-    max-height: calc(100vh - 140px);
-    overflow-y: auto;
+    max-height: none;
+    overflow-y: visible;
     font-size: 0.88em;
 }
 
@@ -181,11 +186,6 @@ a:hover {
     line-height: 1.35;
 }
 
-.splash-container .archival-hero .hero-desc {
-    font-size: clamp(0.8rem, 1.3vw, 0.95rem);
-    line-height: 1.35;
-    margin-bottom: 4px;
-}
 
 .splash-container .note-text {
     font-size: 0.65em;
@@ -1159,7 +1159,7 @@ a:hover {
     padding: 8px 10px;
     margin-bottom: 8px;
     background: var(--saffron);
-    color: #fff;
+    color: var(--ink);
     border-radius: 6px;
     font-size: 0.75rem;
     font-family: Arial, sans-serif;
@@ -1197,6 +1197,8 @@ a:hover {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     margin-bottom: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 #timelineIndicator {
