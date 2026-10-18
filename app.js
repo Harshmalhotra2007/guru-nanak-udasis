@@ -964,6 +964,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const splash = document.getElementById('splash-screen');
             if (splash) splash.classList.add('fade-out');
 
+            // Wait for fade-out CSS transition (800ms) before showing app & initializing map
             setTimeout(() => {
                 const appContainer = document.getElementById('app-container');
                 if (appContainer) appContainer.classList.remove('hidden');
@@ -972,6 +973,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     initMap();
                 } catch (e) {
                     console.error('Map init failed:', e);
+                }
+
+                // Revalidate map size now that both containers are laid out
+                if (map && appContainer) {
+                    const checkVisible = () => {
+                        if (appContainer.offsetParent !== null || getComputedStyle(appContainer).display !== 'none') {
+                            map.invalidateSize();
+                            return;
+                        }
+                        requestAnimationFrame(checkVisible);
+                    };
+                    requestAnimationFrame(checkVisible);
                 }
 
                 // Show all button
