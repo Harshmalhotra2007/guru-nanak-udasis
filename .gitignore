@@ -15,6 +15,7 @@ desktop.ini
 # Local backups and temporary scratch files
 _backup_snapshot/
 timeline-*.html
+_trash/
 
 # Local assistant and tool configs
 .claude/
