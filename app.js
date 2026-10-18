@@ -211,7 +211,7 @@ function stopDrone() {
                 if (audioCtx) {
                     gainNode.gain.setValueAtTime(gainNode.gain.value, audioCtx.currentTime);
                     gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
-                    setTimeout(() => {
+                    setTimeout(function() {
                         try {
                             osc.stop();
                             osc.disconnect();
@@ -965,7 +965,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (splash) splash.classList.add('fade-out');
 
             // Wait for fade-out CSS transition (800ms) before showing app & initializing map
-            setTimeout(() => {
+            setTimeout(function() {
                 const appContainer = document.getElementById('app-container');
                 if (appContainer) appContainer.classList.remove('hidden');
 
@@ -1100,7 +1100,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             contributionStatus.innerHTML = `<span style="color:#2ecc71; font-size:0.75rem;">Thank you! Your contribution on "${escapeHTML(topic)}" has been received for moderation.</span>`;
                         }
                         contributionForm.reset();
-                        setTimeout(() => {
+                        setTimeout(function() {
                             if (contributionStatus) contributionStatus.innerHTML = '';
                         }, 5000);
                     });
