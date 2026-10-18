@@ -966,26 +966,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Wait for fade-out CSS transition (800ms) before showing app & initializing map
             setTimeout(function() {
-                const appContainer = document.getElementById('app-container');
-                if (appContainer) appContainer.classList.remove('hidden');
+                    const appContainer = document.getElementById('app-container');
+                    if (appContainer) appContainer.classList.remove('hidden');
 
-                try {
-                    initMap();
-                } catch (e) {
-                    console.error('Map init failed:', e);
-                }
+                    try {
+                        initMap();
+                    } catch (e) {
+                        console.error('Map init failed:', e);
+                    }
 
-                // Revalidate map size now that both containers are laid out
-                if (map && appContainer) {
-                    const checkVisible = () => {
-                        if (appContainer.offsetParent !== null || getComputedStyle(appContainer).display !== 'none') {
-                            map.invalidateSize();
-                            return;
-                        }
+                    // Revalidate map size now that both containers are laid out
+                    if (map && appContainer) {
+                        const checkVisible = () => {
+                            if (appContainer.offsetParent !== null || getComputedStyle(appContainer).display !== 'none') {
+                                map.invalidateSize();
+                                return;
+                            }
+                            requestAnimationFrame(checkVisible);
+                        };
                         requestAnimationFrame(checkVisible);
-                    };
-                    requestAnimationFrame(checkVisible);
-                }
+                    }
 
                 // Show all button
                 const showAllBtn = document.getElementById('showAllBtn');
@@ -1105,11 +1105,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         }, 5000);
                     });
                 }
-            }, 600);
+            }, 900);
         });
     }
-
-    // Landing Page route index & sidebar buttons
     const routeItems = document.querySelectorAll('.route-item, .index-item');
     routeItems.forEach(item => {
         item.addEventListener('click', () => {
