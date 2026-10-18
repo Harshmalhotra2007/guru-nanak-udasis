@@ -31,12 +31,14 @@ let minCss = stylesCss
     .replace(/\s*([\{\}\:\;\,])\s*/g, '$1') // Remove spaces around structural characters
     .trim();
 
-// Minify JS
+// Minify JS safely
 let minJs = appJs
     .replace(/\/\*[\s\S]*?\*\//g, '') // Remove block comments
-    .replace(/(?<!:)\/\/[^\n]*/g, '') // Remove line comments, avoiding URLs
-    .replace(/\s+/g, ' ') // Collapse whitespace
-    .trim();
+    .replace(/(?<!:)\/\/[^\r\n]*/g, '') // Remove line comments
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(Boolean)
+    .join('\n');
 
 fs.writeFileSync(appMinJsPath, minJs, 'utf8');
 fs.writeFileSync(stylesMinCssPath, minCss, 'utf8');

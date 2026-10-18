@@ -867,6 +867,11 @@ a:hover {
     background: #3f3020;
 }
 
+#showAllBtn.active {
+    background: var(--saffron);
+    color: #fff;
+}
+
 .search-input {
     width: 100%;
     padding: 12px 16px;
@@ -998,20 +1003,20 @@ a:hover {
     font-size: 1.02rem !important;
     font-weight: 700 !important;
     margin: 0 0 4px !important;
-    color: var(--ink) !important;
+    color: #1A130F !important;
 }
 
 .old-name {
     font-family: Georgia, 'Iowan Old Style', serif;
     font-weight: 700;
-    color: var(--ink);
+    color: #1A130F;
 }
 
 .new-name {
     font-family: Arial, sans-serif;
     font-weight: 400;
     font-size: 0.75rem;
-    color: #6C5A47;
+    color: #3D2E1E;
     margin-left: 3px;
     font-style: italic;
 }
@@ -1030,7 +1035,7 @@ a:hover {
 
 .popup-desc {
     font-size: 0.78rem !important;
-    color: var(--ink-soft) !important;
+    color: #2C2219 !important;
     line-height: 1.4 !important;
     margin: 0 !important;
 }
@@ -1064,7 +1069,7 @@ a:hover {
 }
 
 .leaflet-popup-close-button {
-    color: var(--color-text-muted) !important;
+    color: #2B2118 !important;
     font-size: 16px !important;
     top: 5px !important;
     right: 5px !important;
@@ -1072,7 +1077,7 @@ a:hover {
 }
 
 .leaflet-popup-close-button:hover {
-    color: var(--color-gold-glowing) !important;
+    color: #8C2D19 !important;
     background: transparent !important;
 }
 
@@ -1323,15 +1328,15 @@ a:hover {
 /* Dark Color Scheme */
 @media (prefers-color-scheme: dark) {
     :root {
-        --parchment: #1A130F;
-        --parchment-dark: #251A16;
+        --parchment: #251A16;
+        --parchment-dark: #1A130F;
         --ink: #F1E7D0;
         --ink-soft: #D9C9A6;
         --saffron: #D4AF37;
 
-        --color-bg-dark: #F1E7D0;
-        --color-panel-bg: #1A130F;
-        --color-card-bg: #1A130F;
+        --color-bg-dark: #1A130F;
+        --color-panel-bg: #251A16;
+        --color-card-bg: #251A16;
         --color-text-main: #F1E7D0;
         --color-text-muted: #D9C9A6;
         --color-gold: #D4AF37;
@@ -1426,11 +1431,11 @@ a:hover {
         background: rgba(212, 175, 55, 0.2);
     }
 
-    .timelineBar {
+    #timelineBar {
         background: rgba(0, 0, 0, 0.95);
     }
 
-    .timelineBar.visible {
+    #timelineBar.visible {
         background: rgba(0, 0, 0, 0.95);
     }
 
