@@ -431,9 +431,18 @@
 
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script>
+        // Fallback: if jsDelivr failed, load Leaflet from Cloudflare via a real
+        // script element. document.write is blocked by Chrome for parser-blocking
+        // cross-site scripts, so it must not be used here.
         if (typeof L === 'undefined') {
             console.warn("jsDelivr CDN failed to load Leaflet JS, attempting Cloudflare CDN fallback.");
-            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"><\/script>');
+            var fallback = document.createElement('script');
+            fallback.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+            fallback.crossOrigin = 'anonymous';
+            fallback.onerror = function() {
+                console.error("Both jsDelivr and Cloudflare CDNs failed to load Leaflet JS. Map will not render.");
+            };
+            document.head.appendChild(fallback);
         }
     </script>
     

@@ -969,11 +969,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     const appContainer = document.getElementById('app-container');
                     if (appContainer) appContainer.classList.remove('hidden');
 
-                    try {
-                        initMap();
-                    } catch (e) {
-                        console.error('Map init failed:', e);
-                    }
+                    // Leaflet may still be loading from the CDN fallback, so retry
+                    // a few times before giving up.
+                    var mapInitAttempts = 0;
+                    var tryInitMap = function() {
+                        if (typeof L !== 'undefined') {
+                            try {
+                                initMap();
+                            } catch (e) {
+                                console.error('Map init failed:', e);
+                            }
+                            return;
+                        }
+                        mapInitAttempts++;
+                        if (mapInitAttempts < 20) {
+                            setTimeout(tryInitMap, 250);
+                        } else {
+                            console.error('Map init failed: Leaflet (L) never loaded from any CDN.');
+                        }
+                    };
+                    tryInitMap();
 
                     // Revalidate map size now that both containers are laid out
                     if (map && appContainer) {
