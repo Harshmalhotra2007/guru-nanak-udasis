@@ -29,9 +29,13 @@ The codebase and asset structure underwent a comprehensive cleanup and optimizat
 - **Deleted Orphaned Files**:
   - Removed deprecated legacy backend scripts (`api-engine.js`, `scanner-engine.js`, `ml-engine.js`).
   - Removed unused platform stylesheet (`platform.css`).
-  - Total deleted file bloat: **~123.5 KB**.
+  - Removed backup snapshot (`_backup_snapshot/`), trash folder (`_trash/`), design canvas files (`.kombai/`), and the 68-skill definitions (`.agents/`).
+  - Removed dev-only linting configs (`.eslintrc.json`, `.prettierrc`).
+  - Total deleted file bloat: **~1.2 MB**.
 - **Pruned Dead CSS Rules**:
   - Pruned unused CSS classes from legacy layout templates.
+  - Removed unused `.control-btn.compare-selected` rule (compare mode uses inline `selected` class instead).
+  - Removed unused `.timeline-item.highlight` rule and `@keyframes highlightPulse` (never triggered in JS).
   - Reduced `styles.css` from **38.7 KB → 14.0 KB** (63.8% size reduction).
   - Reduced production bundle `styles.min.css` from **27.5 KB → 10.5 KB** (61.8% bundle reduction).
 - **Zero Syntax Errors & Verified Build**:

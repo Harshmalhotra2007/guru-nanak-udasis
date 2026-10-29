@@ -698,29 +698,20 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 6px;
+    flex-wrap: nowrap;
+    gap: 12px;
     border-bottom: 2px solid var(--saffron);
     z-index: 20;
     height: 56px;
 }
 
-.app-tagline {
-    font-family: Georgia, serif;
-    font-size: 0.72rem;
-    color: #C1791F;
-    margin: 0;
-    line-height: 1.2;
-    flex: 1 1 auto;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
 .header-title-group {
     border-left: 3px solid var(--saffron);
     padding-left: 14px;
     flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .header-title-group h1 {
@@ -738,24 +729,15 @@ a:hover {
     font-style: italic;
     font-size: 0.82rem;
     color: #E8D5A0;
-    margin-left: 8px;
     font-family: Georgia, serif;
-}
-
-.header-meta-text {
-    font-size: 0.72rem;
-    color: #C9B78D;
-    text-align: right;
-    max-width: 320px;
-    font-family: Arial, sans-serif;
-    line-height: 1.4;
-    flex: 0 0 auto;
+    white-space: nowrap;
 }
 
 .header-controls-group {
     display: flex;
-    align-items: center;
-    gap: 16px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
     flex: 0 0 auto;
 }
 
@@ -784,9 +766,41 @@ a:hover {
     font-size: 0.72rem;
     color: #C9B78D;
     text-align: right;
-    max-width: 320px;
     font-family: Arial, sans-serif;
     line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.vol-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 90px;
+    height: 6px;
+    background: #fff;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+}
+.vol-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #1a8cff;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #fff;
+}
+.vol-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #1a8cff;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #fff;
 }
 
 #main {
@@ -1163,11 +1177,6 @@ a:hover {
     border-color: var(--saffron);
 }
 
-.control-btn.compare-selected {
-    background: var(--dot, var(--saffron));
-    color: #fff;
-    border-color: var(--dot, var(--saffron));
-}
 
 .lang-select {
     width: 100%;
@@ -1265,14 +1274,6 @@ a:hover {
     background: rgba(193, 121, 31, 0.3);
 }
 
-.timeline-item.highlight {
-    animation: highlightPulse 1s ease;
-}
-
-@keyframes highlightPulse {
-    0%, 100% { background: rgba(193, 121, 31, 0.3); }
-    50% { background: rgba(193, 121, 31, 0.6); }
-}
 
 /* Reduced Motion Preferences */
 @media (prefers-reduced-motion: reduce) {

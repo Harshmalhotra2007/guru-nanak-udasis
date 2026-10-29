@@ -5,9 +5,7 @@ const ASSETS_TO_CACHE = [
     './styles.min.css',
     './app.min.js',
     './manifest.json',
-    './images/khanda-logo.jpg',
-    './images/kartarpur.jpg',
-    './images/mecca.jpg'
+    './images/khanda-logo.jpg'
 ];
 
 self.addEventListener('install', (event) => {
