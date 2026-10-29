@@ -969,16 +969,17 @@ a:hover {
 .place-card .pname {
     font-family: Georgia, serif;
     font-weight: 700;
-    font-size: 1.05rem;
+    font-size: 1.25rem;
     color: var(--ink);
+    letter-spacing: 0.02em;
 }
 
 .place-card .pdesc {
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: var(--ink);
-    margin-top: 4px;
-    line-height: 1.4;
-    font-weight: 500;
+    margin-top: 6px;
+    line-height: 1.5;
+    font-weight: 550;
 }
 
 #mapWrap {
