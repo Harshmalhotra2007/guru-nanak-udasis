@@ -423,28 +423,28 @@ a:hover {
     font-weight: 600;
     line-height: 1.05;
     color: #1A130F;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     letter-spacing: -0.5px;
 }
 
 .hero-lead-group {
     display: flex;
     gap: 16px;
-    max-width: 540px;
-    margin-bottom: 40px;
+    max-width: 560px;
+    margin-bottom: 28px;
 }
 
 .hero-lead-bar {
     width: 45px;
-    height: 1px;
+    height: 2px;
     background-color: #C1791F;
-    margin-top: 10px;
+    margin-top: 6px;
     flex-shrink: 0;
 }
 
 .hero-lead-text {
-    font-family: Georgia, serif;
-    font-size: 1.05rem;
+    font-family: Georgia, 'Iowan Old Style', serif;
+    font-size: 1rem;
     line-height: 1.6;
     color: #4A3E31;
 }
@@ -694,38 +694,69 @@ a:hover {
 .app-header {
     background: linear-gradient(180deg, #2B2118 0%, #3a2c1c 100%);
     color: var(--parchment);
-    padding: 14px 24px;
+    padding: 6px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 12px;
-    border-bottom: 3px solid var(--saffron);
+    gap: 6px;
+    border-bottom: 2px solid var(--saffron);
     z-index: 20;
+    height: 56px;
+}
+
+.app-tagline {
+    font-family: Georgia, serif;
+    font-size: 0.72rem;
+    color: #C1791F;
+    margin: 0;
+    line-height: 1.2;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.header-title-group {
+    border-left: 3px solid var(--saffron);
+    padding-left: 14px;
+    flex: 0 0 auto;
 }
 
 .header-title-group h1 {
     font-family: Georgia, 'Iowan Old Style', serif;
     font-size: 1.5rem;
-    color: var(--parchment);
-    font-weight: 600;
+    color: #fff;
+    font-weight: 700;
     margin: 0;
     display: inline;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.6px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 .header-title-group .header-subtitle {
     font-style: italic;
-    font-size: 0.88rem;
-    color: #D9C9A6;
-    margin-left: 12px;
+    font-size: 0.82rem;
+    color: #E8D5A0;
+    margin-left: 8px;
     font-family: Georgia, serif;
+}
+
+.header-meta-text {
+    font-size: 0.72rem;
+    color: #C9B78D;
+    text-align: right;
+    max-width: 320px;
+    font-family: Arial, sans-serif;
+    line-height: 1.4;
+    flex: 0 0 auto;
 }
 
 .header-controls-group {
     display: flex;
     align-items: center;
     gap: 16px;
+    flex: 0 0 auto;
 }
 
 .header-audio-pill {

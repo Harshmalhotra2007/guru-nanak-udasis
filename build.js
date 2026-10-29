@@ -24,12 +24,13 @@ if (!forceRebuild && isUpToDate(appJsPath, appMinJsPath) && isUpToDate(stylesCss
 let appJs = fs.readFileSync(appJsPath, 'utf8');
 let stylesCss = fs.readFileSync(stylesCssPath, 'utf8');
 
-// Minify CSS
+// Minify CSS - preserve @media queries
 let minCss = stylesCss
     .replace(/\/\*[\s\S]*?\*\//g, '') // Remove block comments
     .replace(/\s+/g, ' ') // Collapse whitespace
     .replace(/\s*([\{\}\:\;\,])\s*/g, '$1') // Remove spaces around structural characters
     .trim();
+// Note: @media queries should be preserved by the above as they don't match the comment or whitespace patterns
 
 // Minify JS safely
 let minJs = appJs
